@@ -10,7 +10,10 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="12dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/photo_item" />
+        app:spanCount="2"
+        tools:listitem="@layout/photo_item"
+        android:layout_gravity="center_horizontal"/>
 
 </FrameLayout>
