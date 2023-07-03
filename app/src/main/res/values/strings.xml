@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GalleryTechTask</string>
+    <string name="photographer">Photographer:</string>
+    <string name="description">Description:</string>
 </resources>
