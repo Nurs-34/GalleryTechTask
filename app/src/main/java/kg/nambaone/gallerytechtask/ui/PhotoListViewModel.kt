@@ -3,6 +3,7 @@ package kg.nambaone.gallerytechtask.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kg.nambaone.gallerytechtask.model.PhotoModel
 import kg.nambaone.gallerytechtask.repository.PhotoRepository
 import kg.nambaone.gallerytechtask.utils.Constants.Companion.page
@@ -29,15 +30,23 @@ class PhotoListViewModel : ViewModel() {
     }
 
     suspend fun loadPhotoList(page: Int, perPage: Int) {
-        val response = repository.loadPhotoList(page, perPage)
+        _myLoadingStateFlow.value = false
 
-        if (response.isSuccessful) {
-            val list =
-                viewModelScope.async { response.body()?.photos }
-            photoList = list.await() as ArrayList<PhotoModel>
-            Log.e("AAAAA", photoList.size.toString())
+        try {
+            val response = repository.loadPhotoList(page, perPage)
 
-            _myLoadingStateFlow.value = true
+            if (response.isSuccessful) {
+                val list =
+                    viewModelScope.async { response.body()?.photos }
+                photoList = list.await() as ArrayList<PhotoModel>
+                Log.e("AAAAA", photoList.size.toString())
+
+                _myLoadingStateFlow.value = true
+            }
+        } catch (e: Exception) {
+
         }
+
+
     }
 }

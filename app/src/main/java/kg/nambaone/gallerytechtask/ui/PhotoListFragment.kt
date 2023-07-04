@@ -2,6 +2,7 @@ package kg.nambaone.gallerytechtask.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.SyncStateContract.Constants
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
 import kg.nambaone.gallerytechtask.MainActivity
 import kg.nambaone.gallerytechtask.R
@@ -21,13 +23,11 @@ import kg.nambaone.gallerytechtask.adapters.OnItemClickListener
 import kg.nambaone.gallerytechtask.adapters.PhotoAdapter
 import kg.nambaone.gallerytechtask.model.PhotoModel
 import kg.nambaone.gallerytechtask.ui.dialogs.PhotoDetailDialog
+import kg.nambaone.gallerytechtask.utils.Constants.Companion.page
+import kg.nambaone.gallerytechtask.utils.Constants.Companion.perPage
 import kotlinx.coroutines.launch
 
 class PhotoListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = PhotoListFragment()
-    }
 
     private lateinit var viewModel: PhotoListViewModel
     private lateinit var photoList: List<PhotoModel>
@@ -48,6 +48,7 @@ class PhotoListFragment : Fragment() {
         val lottieAnimation = view.findViewById<LottieAnimationView>(R.id.animation_view)
 
         val noDescStringRes = requireContext().getString(R.string.no_description)
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
 
         recyclerView.layoutManager = layoutManager
 
@@ -62,7 +63,10 @@ class PhotoListFragment : Fragment() {
                             Log.e("BBB", bundle.toString())
                             val dialog = PhotoDetailDialog()
                             dialog.arguments = bundle
-                            dialog.show(requireActivity().supportFragmentManager, "Photo detail dialog")
+                            dialog.show(
+                                requireActivity().supportFragmentManager,
+                                "Photo detail dialog"
+                            )
                         }
                         recyclerView.adapter = adapter
                         photoList = viewModel.photoList
@@ -70,21 +74,19 @@ class PhotoListFragment : Fragment() {
                         recyclerView.visibility = View.VISIBLE
                     }
 
-                    else -> {}
+                    false -> {
+                        lottieAnimation.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                    }
                 }
             }
         }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout_container, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        swipeRefreshLayout.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.loadPhotoList(page, perPage)
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
     }
 }

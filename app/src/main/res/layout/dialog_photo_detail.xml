@@ -5,21 +5,20 @@
     android:layout_width="400dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-
+    android:background="@android:color/transparent"
     tools:context=".ui.dialogs.PhotoDetailDialog">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/image_view_photo"
         android:layout_width="400dp"
         android:layout_height="400dp"
-        android:layout_margin="16dp"
         android:scaleType="centerCrop"
         android:src="@color/beige"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent" />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
