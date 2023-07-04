@@ -1,7 +1,6 @@
 package kg.nambaone.gallerytechtask.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,9 @@ import kg.nambaone.gallerytechtask.databinding.PhotoItemBinding
 import kg.nambaone.gallerytechtask.model.PhotoModel
 
 class PhotoAdapter(
-    private val values: List<PhotoModel>
+    private val values: List<PhotoModel>,
+    private val noDescriptionStringRes: String,
+    private val onItemClickListener: (PhotoModel) -> Unit
 ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>() {
 
 
@@ -23,6 +24,8 @@ class PhotoAdapter(
     override fun onBindViewHolder(holder: PhotoAdapter.ViewHolder, position: Int) {
         val item = values[position]
         holder.bind(item)
+
+        holder.itemView.setOnClickListener { onItemClickListener(item) }
     }
 
     override fun getItemCount(): Int = values.size
@@ -37,12 +40,9 @@ class PhotoAdapter(
             if (!item.photoDescription.equals(""))
                 photoDescription.text = item.photoDescription
             else
-                photoDescription.text = "No description"
-
-
+                photoDescription.text = noDescriptionStringRes
 
             Glide.with(itemView).load(item.photoUrl?.originalSize).into(photo)
         }
     }
-
 }

@@ -2,4 +2,5 @@
     <string name="app_name">GalleryTechTask</string>
     <string name="photographer">Photographer:</string>
     <string name="description">Description:</string>
+    <string name="no_description">No description</string>
 </resources>
