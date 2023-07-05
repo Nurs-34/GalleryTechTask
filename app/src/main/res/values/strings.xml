@@ -2,4 +2,6 @@
     <string name="app_name">GalleryTechTask</string>
     <string name="photographer">Photographer:</string>
     <string name="description">Description:</string>
+    <string name="no_description">No description</string>
+    <string name="please_check_your_internet_connection">Please check your internet connection.</string>
 </resources>

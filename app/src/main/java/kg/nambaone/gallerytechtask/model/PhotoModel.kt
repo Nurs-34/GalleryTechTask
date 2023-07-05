@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class PhotoModel(
     @SerializedName("photographer") val name: String?,
-    @SerializedName("url") val photoUrl: String?,
+    @SerializedName("src") val photoUrl: SourcePhoto?,
     @SerializedName("alt") val photoDescription: String?
-)
+) {
+    data class SourcePhoto(
+        @SerializedName("original") val originalSize: String?,
+        @SerializedName("medium") val mediumSize: String?
+    )
+}
