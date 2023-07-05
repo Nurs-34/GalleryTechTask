@@ -1,6 +1,5 @@
 package kg.nambaone.gallerytechtask.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -50,10 +49,5 @@ class PhotoAdapter(
                 .error(R.drawable.ic_error_24)
                 .into(photo)
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateAdapter(){
-        notifyDataSetChanged()
     }
 }

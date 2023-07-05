@@ -2,7 +2,6 @@ package kg.nambaone.gallerytechtask.ui
 
 import android.content.Context
 import android.content.res.Configuration
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.SavedStateHandle
@@ -21,7 +20,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class PhotoListViewModel(private val state: SavedStateHandle) : ViewModel() {
+class PhotoListViewModel(state: SavedStateHandle) : ViewModel() {
     private val savedStateHandle = state
     private val repository = PhotoRepository
 
@@ -89,8 +88,6 @@ class PhotoListViewModel(private val state: SavedStateHandle) : ViewModel() {
     companion object {
         private const val LOADING_VALUE_KEY = "is loading"
         private const val PHOTO_LIST_VALUE_KEY = "photo list"
-
-        private const val PHOTO_URL_VALUE_KEY = "photo url"
     }
 
     sealed class PhotoListAction {

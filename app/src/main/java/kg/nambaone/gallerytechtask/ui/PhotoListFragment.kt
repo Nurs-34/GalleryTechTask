@@ -14,7 +14,6 @@ import kg.nambaone.gallerytechtask.R
 import kg.nambaone.gallerytechtask.adapters.PhotoAdapter
 import kg.nambaone.gallerytechtask.databinding.FragmentPhotoListBinding
 import kg.nambaone.gallerytechtask.utils.Constants.Companion.perPage
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
