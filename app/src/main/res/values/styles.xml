@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleTextStyle">
+        <item name="android:textColor">@color/emerald</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/gawaa_regular</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
+    <style name="BodyTextStyle">
+        <item name="android:textColor">@color/emerald</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="textInputStyle">@id/italic</item>
+        <item name="fontFamily">@font/gawaa_italic</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
+        <item name="cornerSize">20%</item>
+    </style>
+
+</resources>
