@@ -1,11 +1,13 @@
 package kg.nambaone.gallerytechtask.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
+import kg.nambaone.gallerytechtask.R
 import kg.nambaone.gallerytechtask.databinding.PhotoItemBinding
 import kg.nambaone.gallerytechtask.model.PhotoModel
 
@@ -42,7 +44,16 @@ class PhotoAdapter(
             else
                 photoDescription.text = noDescriptionStringRes
 
-            Glide.with(itemView).load(item.photoUrl?.mediumSize).into(photo)
+            Glide.with(itemView)
+                .load(item.photoUrl?.mediumSize)
+                .placeholder(R.drawable.ic_image_placeholder_24)
+                .error(R.drawable.ic_error_24)
+                .into(photo)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateAdapter(){
+        notifyDataSetChanged()
     }
 }
