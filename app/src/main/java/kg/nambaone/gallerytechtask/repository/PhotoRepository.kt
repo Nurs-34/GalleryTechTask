@@ -6,7 +6,7 @@ import retrofit2.Response
 
 object PhotoRepository {
     private val apiService: RestApiInterface
-        get() = RestApiInterface.invoke()
+        get() = RestApiInterface()
 
     suspend fun loadPhotoList(page: Int, perPage: Int): Response<PhotoResponse> {
         return apiService.getPhotoList(page, perPage)

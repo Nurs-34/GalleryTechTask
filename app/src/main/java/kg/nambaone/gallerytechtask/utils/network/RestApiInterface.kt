@@ -21,33 +21,32 @@ interface RestApiInterface {
         private const val BASE_URL = "https://api.pexels.com"
         private const val API_KEY = "3I0snobuoINf2J7AMsTT6gYKuaKHG2xP0keC8kUvxTxK1CLb04c0PDBV"
 
+        private val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+            .addInterceptor(loggingInterceptor)
             .addInterceptor { chain ->
-                val original = chain.request()
-                val originalHttpUrl = original.url
+                val originalRequest = chain.request()
+                val url = originalRequest.url.newBuilder().build()
 
-                val url = originalHttpUrl.newBuilder()
-                    .build()
-
-                val request = original.newBuilder()
+                val modifierRequest = originalRequest.newBuilder()
                     .addHeader("Authorization", API_KEY)
                     .url(url)
                     .build()
-
-                chain.proceed(request)
+                chain.proceed(modifierRequest)
             }
             .build()
 
+        private val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
         operator fun invoke(): RestApiInterface {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(RestApiInterface::class.java)
+            return retrofit.create(RestApiInterface::class.java)
         }
     }
 }
