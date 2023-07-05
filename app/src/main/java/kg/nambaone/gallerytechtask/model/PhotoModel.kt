@@ -7,5 +7,8 @@ data class PhotoModel(
     @SerializedName("src") val photoUrl: SourcePhoto?,
     @SerializedName("alt") val photoDescription: String?
 ) {
-    data class SourcePhoto (@SerializedName("original") val originalSize: String?)
+    data class SourcePhoto(
+        @SerializedName("original") val originalSize: String?,
+        @SerializedName("medium") val mediumSize: String?
+    )
 }

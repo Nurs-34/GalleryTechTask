@@ -42,7 +42,7 @@ class PhotoAdapter(
             else
                 photoDescription.text = noDescriptionStringRes
 
-            Glide.with(itemView).load(item.photoUrl?.originalSize).into(photo)
+            Glide.with(itemView).load(item.photoUrl?.mediumSize).into(photo)
         }
     }
 }

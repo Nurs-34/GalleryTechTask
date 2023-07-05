@@ -10,14 +10,19 @@ import kg.nambaone.gallerytechtask.utils.Constants.Companion.page
 import kg.nambaone.gallerytechtask.utils.Constants.Companion.perPage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class PhotoListViewModel : ViewModel() {
     private val repository = PhotoRepository
+
+    val photoListActionFlow: MutableSharedFlow<PhotoListAction> = MutableSharedFlow()
+
     private val _myLoadingStateFlow = MutableStateFlow(false)
     val myLoadingStateFlow = _myLoadingStateFlow.asStateFlow()
+
     var photoList = ArrayList<PhotoModel>()
 
     init {
@@ -39,14 +44,18 @@ class PhotoListViewModel : ViewModel() {
                 val list =
                     viewModelScope.async { response.body()?.photos }
                 photoList = list.await() as ArrayList<PhotoModel>
-                Log.e("AAAAA", photoList.size.toString())
 
                 _myLoadingStateFlow.value = true
             }
         } catch (e: Exception) {
-
+            photoListActionFlow.emit(PhotoListAction.ShowInternetErrorToast)
+            Log.e("PhotoListVM", "Exception: $e")
         }
 
 
+    }
+
+    sealed class PhotoListAction {
+        object ShowInternetErrorToast : PhotoListAction()
     }
 }
