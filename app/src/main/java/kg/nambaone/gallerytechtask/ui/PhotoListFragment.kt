@@ -21,7 +21,8 @@ import kotlin.random.Random
 
 class PhotoListFragment : Fragment() {
 
-    private lateinit var binding: FragmentPhotoListBinding
+    private var _binding: FragmentPhotoListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: PhotoListViewModel
     private lateinit var adapter: PhotoAdapter
 
@@ -29,7 +30,7 @@ class PhotoListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPhotoListBinding.inflate(inflater, container, false)
+        _binding = FragmentPhotoListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -106,5 +107,10 @@ class PhotoListFragment : Fragment() {
     private fun showLoadingAnimation() {
         binding.animationView.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding
     }
 }
